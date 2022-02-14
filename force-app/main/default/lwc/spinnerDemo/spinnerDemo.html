@@ -1,0 +1,17 @@
+<template>
+  <lightning-card title="Resulable  spinner Demo" >
+    <lightning-button label="Spinner " variant="brand" onclick={spinnerHandler}></lightning-button>
+      <p>hello 1</p>
+      <p>hello 1</p>
+      <p>hello 1</p>
+      <p>hello 1</p>
+      <p>hello 1</p>
+      <p>hello 1</p>
+      <template if:true={showOne}>
+      <!--<lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>-->
+      <c-lightning-loader-demo>
+        spinner-Text ="hey I am spinner her...."
+      </c-lightning-loader-demo>
+      </template>
+  </lightning-card>
+</template>

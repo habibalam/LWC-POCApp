@@ -1,0 +1,12 @@
+<template>
+    <div style="width:640;">
+    <lightning-card title={name} icon-name="custom:custom34">
+        <p class="slds-p-around_medium">
+          <template if:true={showDetails}>
+            {details}
+          </template>  
+        </p>
+        <lightning-button slot="actions" label={actionButtonLabel} variant="brand" onclick={handleChange}></lightning-button>
+    </lightning-card>
+ </div>
+</template>

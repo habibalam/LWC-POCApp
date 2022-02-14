@@ -1,0 +1,66 @@
+<template>
+    <lightning-card title="Delete Selected Rows in Datatable" icon-name="standard:contact" ><br/>
+        <h3 slot="title">
+            <lightning-icon  icon-name="standard:contact"  size="large"></lightning-icon> Custom Search Functionality on Account Object in LWC.          
+        </h3>
+         
+           <p class="slds-p-horizontal_small">
+              <lightning-input  type="search" class="slds-m-bottom_small" label="Search Account Name" onchange={searchAccountAction} value={accountName}></lightning-input>
+           </p>
+           <div class="slds-box slds-theme--default">  
+                <lightning-button label={buttonLabel}
+                                  icon-name="utility:delete"
+                                  disabled={isTrue}
+                                  variant="destructive" 
+                                  onclick={handleDelete}
+                                  style="margin-left:85%;margin-bottom:-100px;">
+                            </lightning-button>
+                     <div>
+                        <span><p style="margin-right: 90%">Selected Records: <b style="color:red;">{recordsCount}</b></p></span>
+                      </div>
+              <div>
+                <span><p style="margin-right: 90%">TotalRecords: <b style="color:red;">{totalRecord}</b></p></span>
+             </div>
+             <lightning-button label="New Account" onclick={navigateToNewAccountPage}></lightning-button>
+             <lightning-combobox name="filter" label="Status"
+                 value={selectedValue}
+                 variant="label-hidden"
+                 options={options}
+                 onchange={handleChange}
+                 placeholder="Choose Records"
+                 style="color:grey;width:150px;">
+            </lightning-combobox> 
+           
+         </div>
+        <div style="height:250px;"> 
+            <lightning-datatable
+                key-field="Id"
+                data={dataList}
+                columns={columns}
+                onrowselection={getSelectedId}
+                sorted-by={sortBy}
+                sorted-direction={sortDirection}
+                onsort={handleSortdata}
+                onrowaction={handleEdit}>
+            </lightning-datatable>
+          </div> 
+         
+          <lightning-layout horizontal-align="space">
+            <lightning-layout-item flexibility="auto">
+                <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler}>
+                </lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto">
+                Page {page} of {totalPage}
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto">
+                <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right"
+                    onclick={nextHandler}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+         
+       </lightning-card>
+       <template if:true={isModalOpen} >
+          <c-account-edit-modal acc-id={modalAccountId} onclosemodal={handleModalClose}></c-account-edit-modal>
+      </template>
+</template>

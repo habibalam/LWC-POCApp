@@ -1,0 +1,23 @@
+<template>
+    <lightning-layout>
+    <lightning-card title="Drag Accounts">   
+        <template for:each={accounts.data} for:item="account" if:true={accounts.data}> 
+            <div class="slds-m-top_medium slds-m-bottom_x-small" key={account.id} 
+                draggable="true" 
+                data-item={account.Id} ondragstart={handleDragStart}>
+                <div  class="slds-p-around_medium lgc-bg">
+                    <lightning-tile  type="media" class="bolder_style"> 
+                        <lightning-icon slot="media" icon-name="standard:account"></lightning-icon>
+                        <a href="#" onclick={handleClick} data-accountid={account.Id}>{account.Name}</a>          
+                    </lightning-tile>
+                </div> 
+            </div>
+        </template>
+    </lightning-card>
+    <lightning-layout-item padding="around-small" size="9">
+        <!--<c-opportunity-related-account account-id={accountidfrmparent}></c-opportunity-related-account>-->
+       <!--<c-contact-records-list account-id={accountidfrmparent}></c-contact-records-list>-->
+       <c-opportunity-record-list account-id={accountidfrmparent}></c-opportunity-record-list>
+    </lightning-layout-item>
+</lightning-layout>
+</template>

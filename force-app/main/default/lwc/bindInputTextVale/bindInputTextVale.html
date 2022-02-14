@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Dynamic Value passing" icon-name="utility:user">
+        <div class="slds-m-around_medium">
+            hello {myValue}!
+        </div>
+        <div style="padding: 10px;">
+        <lightning-input label="dynamic value" value={myValue} onchange={handleChange}>
+        </lightning-input>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title="Account Filter">
+        <div class="slds-size_3-of-3"> 
+         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+        <div class="slds-m-around_x-small slds-grid">
+            <lightning-combobox label="Industry" name="industry" options={industryOptions}
+                class="slds-p-around_x-small industry-searchbox"></lightning-combobox>
+                
+            <lightning-input type="text" class="slds-p-around_medium name-searchbox"
+                placeholder="Enter Name of the Account" style="width: 80%;"></lightning-input>
+            <lightning-button class="slds-m-top_x-large slds-m-bottom_medium slds-p-right_x-small" variant="brand"
+                label="Search" icon-name="utility:search" icon-position="left" onclick={handleSearch}>
+            </lightning-button>
+        </div>
+        </div>
+        </div>
+    </lightning-card>
+
+    <template if:false={isSearchResults}>
+        <lightning-card class="slds-m-around_x-small">
+            <p class="slds-p-around_x-small slds-text-align_center">
+                No data found
+            </p>
+        </lightning-card>
+    </template>
+    <template if:true={showSpinner}>
+        <lightning-card class="slds-m-around_x-small">
+            <div class="cstm-spinner">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </lightning-card>
+    </template>
+    <template for:each={listOfAccounts} for:item="account">
+        <lightning-card key={account.Id} class="slds-m-around_x-small">
+            <div class="slds-m-around_x-small slds-p-around_x-small slds-grid">
+                <div class="slds-m-around_x-small slds-p-top_medium" style="width: 20%;">
+                    <img src={account.Industry_Image__c} class="cstm-img" alt="image" />
+                </div>
+                <div class="slds-box slds-m-around_x-small" style="width: 60%; box-shadow: 2px 3px #888888;">
+                    <lightning-record-view-form record-id={account.Id} object-api-name="Account" class="slds-form">
+                        <div class="slds-grid slds-m-around_x-small">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-output-field field-name="Name"></lightning-output-field>
+                                <lightning-output-field field-name="AnnualRevenue"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-output-field field-name="Website"></lightning-output-field>
+                                <lightning-output-field field-name="Phone"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-output-field field-name="Industry"></lightning-output-field>
+                            </div>
+                        </div>
+                    </lightning-record-view-form>
+                </div>
+                <div class="slds-p-around_medium slds-m-top_medium" style="width: 20%;">
+                    <lightning-button value={account.Id} label="Edit" class="slds-m-around_x-small" variant="brand-outline"
+                        icon-name="utility:edit" icon-position="left" onclick={handleEdit}>
+                    </lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={isModalOpen} >
+        <c-account-edit-modal acc-id={modalAccountId} onclosemodal={handleModalClose}></c-account-edit-modal>
+    </template>
+
+</template>

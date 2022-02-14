@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Get user Details using wire properties" icon-name="utility:user">  </lightning-card>
+    <template if:true={user.data}>
+        <div style="padding: 10px; background-color:white;">
+        <p>Id: {userId}</p></br>
+        <p>Name: {name}</p>
+    </div>
+   </template>
+ 
+</template>

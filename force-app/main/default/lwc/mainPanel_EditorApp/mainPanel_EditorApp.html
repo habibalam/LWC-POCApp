@@ -1,0 +1,100 @@
+<template>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col" >
+            <div class="sidebar">    
+                <ul>    
+                    <li><a onclick={handleAccountRecords}>Accounts</a></li>
+                    <li><a onclick={handleContactRecords}>Contacts</a></li>
+                    <li><a onclick={outOfScope}>Opportunties</a></li>
+                    <li><a onclick={navigateToReports}>Reports</a></li>
+                    <li><a onclick={navigateToFiles}>Files</a></li>
+                
+                </ul> 
+            </div>
+        </div>
+
+        <template if:true={showModal}>
+            <c-out-of-scope_-editor-app onclosemodal={handleCloseModal}></c-out-of-scope_-editor-app>
+        </template>
+        <div id='center-Div' class="slds-col centerDiv"> <!--class="slds-col" style="width: 50%;"-->
+            <span>
+                <template if:true={showAccounts}>
+                    <lightning-card title="Accounts" icon-name="standard:account">
+                        <div class="slds-grid slds-wrap slds-var-p-around_small">
+                            <template for:each={accountsList} for:item='acc'>
+                                <lightning-card key={acc.Id} title={acc.Name} class="slds-tabs_card slds-size_1-of-1">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col " > <!--style='width:25%'-->
+                                          <span>
+                                              <img style='border-radius: 50%;height:70px;width:70px;' src={acc.Image_URL__c} alt='Image' class='slds-m-around_medium'/>
+                                            </span>
+                                        </div>
+                                        <div class="slds-col" style="overflow: hidden;">
+                                          <span>
+                                            
+                                            <p class=slds-text-title_bold>Industry : <lightning-formatted-text value={acc.Industry} name='industry' ></lightning-formatted-text></p>
+
+                                            
+                                            <p class=slds-text-title_bold>Phone : <lightning-formatted-phone value={acc.Phone} name='phone' ></lightning-formatted-phone></p>
+
+                                            
+                                            <p class=slds-text-title_bold>Website : <lightning-formatted-url value={acc.Website} name='website' ></lightning-formatted-url></p>
+                                            </span>
+                                        </div>
+                                        <div class="slds-col">
+                                          <span><lightning-button value={acc.Id} label="Preview" variant="brand-outline"
+                                            class="slds-var-m-around_small slds-float_right" onclick={handleAccountPreview}></lightning-button></span>
+                                        </div>
+                                      </div>
+                                </lightning-card>
+                            </template>
+                        </div>
+                    </lightning-card>
+                </template>
+
+                <template if:true={showContacts}>   
+                    <lightning-card title="Contacts" icon-name="standard:contact">
+                        <div class="slds-grid slds-wrap slds-var-p-around_small">
+                            <template for:each={contactsList} for:item='con'>
+                                <lightning-card key={con.Id} title={con.Name} class="slds-tabs_card slds-size_1-of-1">
+
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <span><img style='border-radius: 50%;height:70px;width:70px;' src={con.Image_URL__c} alt='Image' class='slds-m-around_medium'/></span>
+                                          </div>
+                                        <div class="slds-col">
+                                          <span>
+                                            <p class="slds-var-m-around_small slds-text-title_bold">Title : <lightning-formatted-text value={con.Title}></lightning-formatted-text></p>  
+                                            <p class="slds-var-m-around_small slds-text-title_bold">Phone : <lightning-formatted-phone value={con.Phone}></lightning-formatted-phone></p> 
+                                            <p class="slds-var-m-around_small slds-text-title_bold">Email : <lightning-formatted-email value={con.Email}></lightning-formatted-email></p>
+                                            </span>
+                                        </div>
+                                        <div class="slds-col">
+                                          <span>
+                                            <lightning-button onclick={handleContactPreview} value={con.Id} label="Preview" variant="brand-outline"
+                                            class="slds-var-m-around_small slds-float_right"></lightning-button>
+                                        </span>
+                                        </div>
+                                        
+                                      </div>
+                                </lightning-card>
+                            </template>
+                        </div>
+                    </lightning-card>
+                </template>
+            </span>
+        </div>
+        <!--close here-->
+        <div class="slds-col" >
+          <span>
+            <template if:true={showAccountPreview} >
+                <c-account-preview_-editor-app record-id={recordAccId}></c-account-preview_-editor-app>
+            </template>
+
+            <!-- <template if:true={showContactPreview}>
+                <c-contact-preview_-editor-app record-id={recordConId}></c-contact-preview_-editor-app>
+            </template> -->
+            </span>
+        </div>
+      </div>
+</template>

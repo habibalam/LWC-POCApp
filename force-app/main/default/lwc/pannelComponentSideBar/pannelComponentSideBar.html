@@ -1,0 +1,313 @@
+<template>
+    <div class="slds-grid slds-gutters">
+      <lightning-card title="Accounts" icon-name="action:new_note" style="height: 600px;">
+        <div class="slds-col" >
+            <div class="sidebar">    
+                <ul>    
+                    <li><a onclick={handleAccountRecords}>Accounts</a></li>
+                    <li><a onclick={handleContactRecords}>Contacts</a></li>
+                    <li><a onclick={handleTab}>Inprogress</a></li>
+                    <li><a onclick={navigateToReports}>Reports</a></li>
+                    <li><a onclick={HandleDependentPicklist}>DependentPicklist</a></li>
+                    <li><a onclick={handleDrageCompoent}>DragDropComponent</a></li>
+                
+                </ul> 
+            </div>
+        </div>
+        </lightning-card>
+
+        <div id='center-Div' class="slds-col centerDiv"> <!--class="slds-col" style="width: 50%;"-->
+         <span>
+            <template if:true={showAccounts}>
+                <lightning-card title="Accounts" icon-name="standard:user">
+                <table class="tble">
+                    <tr>
+                      <th>Account Name</th>
+                      <th>Industry</th>
+                      <th>Phone</th>
+                      <th>Webiste</th>
+                      <th>Image</th>
+                      <th>Action</th>
+                      <th>Action</th>
+                    </tr>
+                    <template for:each={accountsList} for:item='acc'>
+                        <tr key={acc.Id} title={acc.Name}>
+                          <td>{acc.Name}</td>  
+                          <td>{acc.Industry}</td>
+                          <td>{acc.Phone}</td>
+                          <td>{acc.Website}</td>
+                          <td><span>
+                            <img style='border-radius: 50%;height:70px;width:70px;' src={acc.Industry_Image__c} alt='Image' class='slds-m-around_medium'/>
+                          </span></td>
+                          <td><button class="slds-button slds-button_brand">view</button></td>
+                          <td><button class="slds-button slds-button_destructive">Delete</button></td>
+                        </tr>
+                    </template>
+                  </table>
+                  </lightning-card>
+            </template>
+            <template if:true={showContacts}>   
+              <lightning-card title="Contacts" icon-name="standard:contact">
+                <div class="slds slds-p-horizontal--medium">
+                <table  class="tble" style="border-collapse:collapse;">
+                    <tr>
+                      <th>ContactName</th>
+                      <th>FirstName</th>
+                      <th>LastName</th>
+                      <th>Email</th>
+                      <th>phone</th>
+                      <th>photo</th>
+                      <th>Action</th>
+                      <th>Action</th>
+                    </tr>
+                    <template for:each={contactsList} for:item='con'>
+                        <tr key={con.Id}>
+                          <td>{con.Name}</td>  
+                          <td>{con.FirstName}</td>
+                          <td>{con.LastName}</td>
+                          <td>{con.Email}</td>
+                          <td>{con.Phone}</td>
+                          <td><span>
+                            <img style='border-radius: 50%;height:70px;width:70px;' src={image1} alt='Image' class='slds-m-around_medium'/>
+                          </span></td>
+                          <td><lightning-button-icon icon-name="utility:preview" data-record-id={con.Id} onclick={previwHandler}  alternative-text="Update"   class="test slds-m-left_xx-small" title="update" style="color: red;"></lightning-button-icon></td>
+                         <td><lightning-button-icon icon-name="utility:delete" data-record-id={con.Id} onclick={delHandler}  alternative-text="Delete"   class="test slds-m-left_xx-small" title="Delete" style="color: red;"></lightning-button-icon></td>
+                         
+                        </tr>
+                    </template>
+                  </table> 
+                  </div>
+
+            </lightning-card>
+            </template>
+
+            <template if:true={showCompoent}>
+                <lightning-card title="Accounts" icon-name="standard:account">
+                    
+                    <lightning-layout-item padding="around-small" size="9">   
+                    <template for:each={accountsList} for:item="account" if:true={accountsList}> 
+                        <div class="slds-m-top_medium slds-m-bottom_x-small" key={account.id} 
+                            draggable="true" 
+                            data-item={account.Id} ondragstart={handleDragStart}>
+                            <div  class="slds-p-around_medium lgc-bg">
+                                <lightning-tile  type="media" class="bolder_style"> 
+                                    <lightning-icon slot="media" icon-name="standard:user"></lightning-icon>
+                                    <a href="#" onclick={handleClick} data-accountid={account.Id}>{account.Name}</a>          
+                                </lightning-tile>
+                            </div> 
+                        </div>
+                    </template>
+                    </lightning-layout-item>
+                 
+                    <lightning-layout-item padding="around-small" size="9">
+                        <!--<c-opportunity-related-account account-id={accountidfrmparent}></c-opportunity-related-account>-->
+                       <!--<c-contact-records-list account-id={accountidfrmparent}></c-contact-records-list>-->
+                       <c-opportunity-record-list account-id={accountidfrmparent}></c-opportunity-record-list>
+                    </lightning-layout-item>
+               </lightning-card>
+            </template>
+
+            <template if:true={showDependentPicklist}>
+                <lightning-card  title="Dependent Picklist">
+                  <div class="slds-grid slds-gutters" style="margin-left:6%">
+                    <div class="slds-col slds-size_1-of-4">
+                      <lightning-combobox label="Account Country" 
+                                          name="country" 
+                                          onchange={handleCountryChange} 
+                                          options={controllingValues} 
+                                          placeholder="--None--" 
+                                          value={selectedCountry}></lightning-combobox><br/>
+                      
+                      <div if:true={selectedCountry}>
+                          Selected Country: <b>{selectedCountry}</b>
+                      </div>
+                  </div>
+                  <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox label="Account State" 
+                                        name="state"
+                                        onchange={handleStateChange} 
+                                        options={dependentValues} 
+                                        placeholder="--None--" 
+                                        value={selectedState}
+                                        disabled={isEmpty}></lightning-combobox><br/>
+                    <div if:true={selectedState}>
+                        Selected State: <b>{selectedState}</b>
+                    </div>
+                </div>
+              </div>
+            </lightning-card>
+            </template>
+
+            <template if:true={showTab}>
+              <lightning-card title="Related Book Information" icon-name="standard:user">
+              <lightning-tabset>
+                <lightning-tab label="About Books">
+                   <lightning-layout multiple-rows>
+                     <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="3" >
+                       <div class="custom-box">
+                        <img style='height:170px;width:170px;' src={image1} alt='Image' class='slds-m-around_medium'/>
+                       </div>
+                     </lightning-layout-item>
+                     <lightning-layout-item size="12" padding="around-small" large-device-size="9">
+                       <div class="custom-box">
+                        <p>
+                          Salesforce is an American cloud-based software company headquartered in 
+                          San Francisco, California. It provides customer relationship management service 
+                          and also provides enterprise applications focused Multi-tenant: Salesforce stores
+                           data in a single database schema. There can be a single instance of a software server 
+                           with multiple tenants. Speaking about a multi-tenant architecture, there is a single
+                            shared application service to several clients. This makes it cost-effective. On the
+                            <button style='color:red;' label={actionButtonLabel} onclick={handleChangesshow}>Readmore...</button>
+                            <template if:true={showDetails}>
+                            contrary, in a single-tenant, the development and maintenance cost must be entirely
+                           owned by one client. Hence the multi-tenant architecture is a boon. 
+                           data in a single database schema. There can be a single instance of a software server 
+                           with multiple tenants. Speaking about a multi-tenant architecture, there is a single
+                            shared application service to several clients. This makes it cost-effective. On the
+                             contrary, in a single-tenant, the development and maintenance cost must be entirely
+                           owned by one client. Hence the multi-tenant architecture is a boon. 
+                           data in a single database schema. There can be a single instance of a software server 
+                           with multiple tenants. Speaking about a multi-tenant architecture, there is a single
+                            shared application service to several clients. This makes it cost-effective. On the
+                             contrary, in a single-tenant, the development and maintenance cost must be entirely
+                           owned by one client. Hence the multi-tenant architecture is a boon. 
+                           </template>
+                        </p>
+                       </div>
+                     </lightning-layout-item>  
+                   </lightning-layout>
+                  
+                </lightning-tab>
+                <lightning-tab label="Add BookDetails " title="2nd tab extended title">
+                   <lightning-layout>
+                    <lightning-layout-item size="12" padding="around-small" small-device-size="3">
+                      <div class="custom-box"></div>
+                    </lightning-layout-item>
+
+                     <lightning-layout-item size="12" padding="around-small"  large-device-size="6">
+                       <div class="custom-box">
+                          <lightning-card icon-name="action:new_note" title="Add Book Details"> 
+                          <lightning-input  name="bookName" label="BookName" onchange={handleBookNameChange}></lightning-input>
+                          <lightning-input  name="bookPrice" label="BookPrice" onchange={handleBookPriceChange}></lightning-input>
+                           <lightning-input  name="authorName" label="AuthorName" onchange={handleAuthorNameChange}></lightning-input>
+                          <!--<lightning-input  name="bookNumber" label="BookNumber" onchange={handleBookNumberChange}></lightning-input>-->
+                           <lightning-input  name="discription" label="Discription" onchange={handleDiscriptionChange}></lightning-input>&nbsp;&nbsp;   
+                           <lightning-button variant="variant" label="Save" title="Save" onclick={handleSave}></lightning-button> 
+                           
+                        </lightning-card> 
+                       
+                       </div>
+                     </lightning-layout-item>
+                     
+                   </lightning-layout>
+
+                </lightning-tab>
+                <lightning-tab label="BookDetails">
+                    <lightning-card title="BookDetails" icon-name="standard:contact">
+                      
+                      <template if:true={isCartbox} >
+                        <c-cart-component record-id={recordBookId} onclosemodal={handleModalClose}></c-cart-component>
+                      </template>
+                      <button type="button"  onclick={showCart}  class="icon-button">
+                        <span class="material-icons"></span>
+                        <span class="icon-button__badge"> {count}</span>
+                        </button>
+                    
+                      <div class="slds slds-p-horizontal--medium">
+                      <table  class="tble" style="border-collapse:collapse;">
+                          <tr>
+                            <th>BookID</th>
+                            <th>BookName</th>
+                            <th>BookAuther</th>
+                            <th>BookPrice</th>
+                            <th>Discription</th>
+                            <th>photo</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                          </tr>
+                          <template for:each={booksList} for:item='b'>
+                              <tr key={b.Id}>
+                                <td><a href="#">{b.Name}</a></td>  
+                                <td><a href="#">{b.Book_Name__c}</a></td>
+                                <td>{b.Author_Name__c}</td>
+                                <td>{b.Book_price__c}</td>
+                                <td>{b.Book_Discription__c}</td>
+                                <td><span>
+                                  <a href="#">
+                                  <img style='height:70px;width:70px;' onclick={handleClickImg} data-record-id={b.Id}  src={b.Book_image__c} alt='Image' class='slds-m-around_medium'/>
+                                  </a>
+                                </span></td>
+                                <td><lightning-button-icon icon-name="utility:preview"  onclick={previwHandler}  alternative-text="Update"   class="test slds-m-left_xx-small" title="update" style="color: red;"></lightning-button-icon></td>
+                               <td><lightning-button-icon icon-name="utility:delete" data-record-id={b.Id} onclick={delHandler}  alternative-text="Delete"   class="test slds-m-left_xx-small" title="Delete" style="color: red;"></lightning-button-icon></td>
+                               
+                              </tr>
+                          </template>
+                        </table> 
+                        </div>
+      
+                  </lightning-card>
+                   
+                </lightning-tab>
+                <lightning-tab label="ContactUs">
+                 contact us 
+              </lightning-tab>
+            </lightning-tabset>
+             </lightning-card>
+            </template>
+          </span>
+        </div>
+        <!--close here-->
+        
+    </div>
+<!---modal start-->
+<template if:true={isModalOpen}>
+  <section role="dialog modal-dialog-centered" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container " id="modal-content-id-1" style="justify-content: center;
+      align-items: center;">
+      <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+       
+    </header>
+        <lightning-card title="Contacts" icon-name="standard:contact">
+          <div class="slds-grid slds-wrap slds-var-p-around_small">
+            <lightning-record-view-form record-id={recordConId} object-api-name="Contact">
+              <div class="slds-grid slds-wrap">
+                  <div class="slds-col slds-size_6-of-12">
+                      <lightning-output-field field-name="FirstName"></lightning-output-field>                   
+                  </div>
+                  <div class="slds-col slds-size_6-of-12">
+                      <lightning-output-field field-name="LastName"></lightning-output-field>
+                  </div>
+                  <div class="slds-col slds-size_6-of-12">
+                      <lightning-output-field field-name="Email"></lightning-output-field>
+                  </div>
+                  <div class="slds-col slds-size_6-of-12">
+                      <lightning-output-field field-name="Phone"></lightning-output-field>
+                  </div>
+                  <div class="slds-col slds-size_6-of-12">
+                      <lightning-output-field field-name="Title"></lightning-output-field>
+                  </div>
+                  <div class="slds-col slds-size_6-of-12">
+                      <lightning-output-field field-name="Description"></lightning-output-field>
+                  </div>
+                  
+              </div>
+          </lightning-record-view-form>
+        </div>
+          <footer class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral slds-align_absolute-center" onclick={closeModal}>Close</button>
+          </footer>
+        </lightning-card> 
+          </div>
+      </div>
+  </section>
+
+  <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+
+</template><!--main close-->
+
+

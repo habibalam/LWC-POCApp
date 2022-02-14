@@ -1,0 +1,21 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Account Details</h2>
+            </header>
+            <lightning-record-edit-form record-id={accId} object-api-name="Account" onsuccess={handleSuccess} onerror={handleError}>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-m-around_xx-small">
+                           
+                        </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="outline" label="Cancel" onclick={closeModal} class="slds-m-around_x-small"></lightning-button>
+                    <lightning-button type="submit" variant="brand" label="Save" class="slds-m-around_x-small"></lightning-button>
+                </footer>
+            </lightning-record-edit-form>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

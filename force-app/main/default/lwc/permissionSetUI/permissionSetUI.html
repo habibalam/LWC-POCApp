@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Permission set UI" icon-name="utility:user">
+      <div class="slds-var-m-around_medium">
+          <div style="padding: 10px">
+              <template if:true={isUIAccessible}>
+                  <h1>I am Available.</h1>
+              </template>
+              <template if:false={isUIAccessible}>
+                 <h1>I am not avialable</h1>
+              </template>
+          </div>
+      </div>
+    </lightning-card>
+
+
+</template>

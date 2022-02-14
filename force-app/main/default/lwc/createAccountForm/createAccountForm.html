@@ -1,0 +1,45 @@
+<template>
+    <lightning-card
+    title="Create Record Using Adapters"
+    icon-name="standard:account"
+  >
+    <div class="slds-p-around_medium">
+      <lightning-input
+        label="Account Name"
+        name="name"
+        onchange={handleChange}
+        class="slds-p-around_x-small"
+      >
+      </lightning-input>
+      <lightning-input
+        label="Phone"
+        name="phone"
+        onchange={handleChange}
+        class="slds-p-around_x-small"
+      >
+      </lightning-input>
+      <lightning-input
+        label="Website"
+        name="website"
+        onchange={handleChange}
+        class="slds-p-around_x-small"
+      >
+    </lightning-input>
+      <lightning-combobox
+        label="Industry"
+        name="industry"
+        onchange={handleChange}
+        class="slds-p-around_x-small"
+        options={options}
+        value={industry}
+      ></lightning-combobox>
+      <lightning-button
+        class="slds-m-around_x-small"
+        label="Create Account"
+        variant="brand"
+        onclick={createAccount}
+      ></lightning-button>
+      <lightning-button variant="destructive" title="Reset Form" class="slds-m-top_small slds-m-horizontal_small" label="Reset Form" onclick={resetFormAction}></lightning-button>  
+    </div>
+  </lightning-card>
+</template>

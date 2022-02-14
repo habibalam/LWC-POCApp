@@ -1,0 +1,77 @@
+<template>
+    <lightning-card title="Delete Selected Rows in Datatable" icon-name="standard:contact" > <br/>
+        <h3 slot="title">
+            <lightning-icon  icon-name="standard:contact"  size="large"></lightning-icon> Custom Search Functionality on Account Object in LWC.          
+        </h3>
+        <p class="slds-p-horizontal_small">
+            <lightning-input  type="search" class="slds-m-bottom_small" label="Search Account Name" onchange={searchAccountAction} value={accountName}></lightning-input>
+       </p>
+       
+       <div style="width: auto;">
+        <template if:true={accounts.data}>
+                <div class="slds-grid slds-gutters">
+                        
+                        <div class="slds-col">
+                            <p class="slds-p-horizontal_small">                
+                                <lightning-button label={buttonLabel}
+                                                  icon-name="utility:delete"
+                                                  disabled={isTrue}
+                                                  variant="destructive" 
+                                                  onclick={handleDelete}
+                                                  style="margin-right:75%;margin-bottom:90px;">
+                                            </lightning-button></p>
+                            </div>   
+                         <!-- <div class="slds-col">
+                           <p class="slds-p-horizontal_small"> 
+                          <lightning-combobox
+                                name="filter"
+                                label="Status"
+                                value={selectedValue}
+                                placeholder="Select Progress"
+                               options={options}
+                              onchange={handleChange} >
+                            </lightning-combobox></p>
+                    </div>-->
+                    <div class="slds-box slds-theme--default">
+
+                        <lightning-combobox name="filter" label="Status"
+                                            value={selectedValue}
+                                            variant="label-hidden"
+                                            options={options}
+                                            onchange={handleChange}
+                                            placeholder="Choose Records"
+                                            style="color:grey;width:150px;">
+                                        </lightning-combobox>
+        
+                    </div>
+                    
+                 </div>
+                     <span><p style="margin-left: 90%">Selected Records: <b style="color:red;">{recordsCount}</b></p></span>
+                
+                <br/>
+          
+            <div style="height: 200px;">
+                <lightning-datatable data={accounts.data}
+                                  hide-checkbox-column="true"
+                                  show-row-number-column="true"
+                                 columns={columns}
+                                key-field="Id"
+                                 onrowselection={getSelectedId}
+                                 onrowaction={handleEdit}>
+                </lightning-datatable>
+                
+            </div> 
+        </template>
+
+    </div> 
+    <div class="slds-m-around_medium">
+        <p class="slds-m-vertical_medium content">
+                 Displaying {startingRecord} to {endingRecord} of {totalRecountCount} records.
+                 Page {page} of {totalPage}. </p>
+        <c-paginator onprevious={previousHandler} onnext={nextHandler}></c-paginator>
+    </div>   
+    </lightning-card>
+    <template if:true={isModalOpen} >
+        <c-account-edit-modal acc-id={modalAccountId} onclosemodal={handleModalClose}></c-account-edit-modal>
+    </template>
+</template>

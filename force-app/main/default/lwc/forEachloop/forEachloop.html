@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="HelloForEach" icon-name="custom:custom14">
+            <div style="padding: 10px;">
+            <table>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Class</th>
+                    <th>Fee</th>
+                </tr>
+       
+          <template for:each={students} for:item="stu">
+          <tr key={stu.Id}>
+            <td>{stu.Name}</td>
+            <td>{stu.class}</td>
+            <td>{stu.Fee}</td>
+          </tr>
+          </template>
+        </table> 
+        </div>
+    </lightning-card>
+</template>

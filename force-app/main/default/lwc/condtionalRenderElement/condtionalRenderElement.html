@@ -1,0 +1,18 @@
+
+    <template>
+        <lightning-card title="condinal Render Element" icon-name="utility:user">
+            <div class="slds-m-around_medium">
+                hello {myValue}!
+            </div>
+            <div style="padding: 10px;">
+              <lightning-input type="checkbox" label="Click me"  onchange={handleChange}>
+            </lightning-input>
+            <template if:true={showMe}>
+                I am visible
+            </template>
+            <template if:false={showMe}>
+             I am not visible.
+            </template>
+            </div>
+        </lightning-card>
+    </template>

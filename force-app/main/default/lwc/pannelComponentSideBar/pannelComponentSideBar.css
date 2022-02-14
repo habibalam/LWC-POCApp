@@ -1,0 +1,130 @@
+body{
+
+    margin: 0;
+}
+.lbl{
+    float:left;
+}
+.bgColor{
+    background-color: green;
+}
+.pTag{
+    float:right;
+}
+
+*{
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   text-decoration: none;
+
+}
+
+.center-div-class{
+    width: 50%;
+}
+
+.sidebar{
+    
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: #4bc0c0;
+}
+
+
+.sidebar ul a{
+
+    display: block;
+    height: 100%;
+    width:100%;
+    line-height:  65px;
+    font-size: 20px;
+    color:white;
+    padding-left:14px;
+    border-top: 1px solid rgb(255, 255,255,.1);
+    transition: .4s;
+    text-align: center;
+   
+}
+
+ul li:hover a{
+    padding-left: 5px;
+    background-color: black;
+}
+
+.sidebar ul a i{
+    margin-right: 16px;
+}
+
+.tble {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .tble th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .tble td, .tble th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .tble tr:nth-child(even){background-color: #f2f2f2;}
+  
+  .tble tr:hover {background-color: #ddd;}
+
+  .bolder_style{
+    border-radius: 5px;
+    background: white;
+    padding: 2px;
+    width: 220px;
+    height: 45px;
+}
+
+body {
+    margin: 25px;
+  }
+.icon-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #333333;
+    background: #dddddd;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    margin-left:90%;
+  }
+  
+  .icon-button:hover {
+    cursor: pointer;
+  }
+  
+  .icon-button:active {
+    background: #cccccc;
+  }
+  
+  .icon-button__badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  
